@@ -1,7 +1,7 @@
 const axios = require("axios");
 const qs = require("qs")
 
-async function getvid(querylink,ftype, quality) {
+async function ytdl(querylink,ftype, quality) {
   return new Promise(async(resolve,reject) => {
     if(!querylink) {
       console.log("Give A YouTube Link!!");
@@ -16,9 +16,6 @@ async function getvid(querylink,ftype, quality) {
       console.log(`Please Put A valid Format!!`);
     }
 
-    
-      
-    
    /* if(formatType === "mp4") {
       
     if(qualityType !== "144p" || qualityType !== "240p"){
@@ -148,7 +145,4 @@ let headers3 = {
   })
 }
 
-
-getvid('https://youtu.be/Ae_9YVHezfk','mp3','128').then((data) => {
-  console.log(data);
-})
+module.exports = ytdl
