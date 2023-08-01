@@ -30,7 +30,7 @@ const yturl = "https://youtu.be/r6zIGXun57U";
 Ytdl(yturl,'mp4','480p')  //By default format is mp4 and quality is 360p
 .then( res => {
 console.log(res)
-}
+})
 ```
 ```output
 {"status":"Success!",
