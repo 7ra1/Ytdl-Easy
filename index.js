@@ -1,6 +1,10 @@
 const axios = require("axios");
-const qs = require("qs")
-const fs = require("fs")
+const qs = require("qs");
+
+
+
+
+
 async function Ytdl(querylink,ftype, quality) {
   return new Promise(async(resolve,reject) => {
     if(!querylink) {
@@ -16,21 +20,6 @@ async function Ytdl(querylink,ftype, quality) {
       console.log(`Please Put A valid Format!!`);
     }
 
-   /* if(formatType === "mp4") {
-      
-    if(qualityType !== "144p" || qualityType !== "240p"){
-      console.log(`Please Put A Valid Quality!!`);
-    } else if (qualityType !== "360p" || qualityType !== "480p") {
-      console.log(`Please Put A Valid Quaality!!`);
-    } else if (qualityType !== "720p")
-    {
-      console.log(`Please Put A Valid Quality!!`);
-    }
-      } else {
-      if(qualityType !== "128kb") {
-        console.log(`Please Put A Valid Quality!!`);
-        }
-      }*/
   let url = "https://savetube.io/api/ajaxSearch"
   let url2 = "https://dt176.jujauauaaaar.xyz/api/json/convert"
   
