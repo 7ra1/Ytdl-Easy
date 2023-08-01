@@ -1,7 +1,7 @@
 const axios = require("axios");
 const qs = require("qs")
-
-async function ytdl(querylink,ftype, quality) {
+const fs = require("fs")
+async function Ytdl(querylink,ftype, quality) {
   return new Promise(async(resolve,reject) => {
     if(!querylink) {
       console.log("Give A YouTube Link!!");
@@ -145,4 +145,5 @@ let headers3 = {
   })
 }
 
-module.exports = ytdl
+
+module.exports = Ytdl
