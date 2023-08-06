@@ -1,6 +1,6 @@
 {
   "name": "ytdl-easy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Ytdl-Easy is a YouTube video downloader module",
   "main": "index.js",
   "scripts": {

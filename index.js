@@ -1,138 +1,65 @@
-const axios = require("axios");
+const axios = require ("axios");
 const qs = require("qs");
+const cheerio = require("cheerio");
 
 
-
-
-
-async function Ytdl(querylink,ftype, quality) {
-  return new Promise(async(resolve,reject) => {
-    if(!querylink) {
-      console.log("Give A YouTube Link!!");
-    } 
-    let formatType = ftype || 'mp4';
-    let qualityType = quality || '360p';
-    if(formatType === "mp3" && !qualityType)    {
-      console.log(`Put A valid Quality!!`);
-    }
-    if(!formatType === "mp4" || !formatType === "mp3")
-    {
-      console.log(`Please Put A valid Format!!`);
-    }
-
-  let url = "https://savetube.io/api/ajaxSearch"
-  let url2 = "https://dt176.jujauauaaaar.xyz/api/json/convert"
-  
-const headers = {
-  'Accept': '*/*',
-  'Accept-Encoding': 'gzip, deflate, br',
-  'Accept-Language': 'en-US,en;q=0.9',
-  'Content-Length': 46,
-  'Content-Type': 'application/x-www-form-urlencoded;',
-  'Origin': 'https://savetube.io',
-  'Referer': 'https://savetube.io/en23',
-  'Sec-Ch-Ua': '"Not)A;Brand";v="24", "Chromium";v="116"',
-  'Sec-Ch-Ua-Mobile': '?1',
-  'Sec-Ch-Ua-Platform': '"Android"',
-  'Sec-Fetch-Dest': 'empty',
-  'Sec-Fetch-Mode': 'cors',
-  'Sec-Fetch-Site': 'same-origin',
-  'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36',
-  'X-Requested-With': 'XMLHttpRequest',
-};
-    const headers2 = {
-    "Accept": "*/*",
+const YTDL = async(querylink,cookie) => {
+try {  
+  let coookie = cookie || "XSRF-TOKEN=eyJpdiI6Ind6Um50aWRvOC9yMURycVREbGpxK3c9PSIsInZhbHVlIjoiU1JzQ1RsUW9GOHRqdmZLS2t6NkdWTlhNTmhiNGExN1Rtd1l4aDBzd2lKNDV5RUlIckl0dkVMYWtuZWVmRjUrblc4elN3b0EyRmFnTnpsQVh6aWk1YWgwWFJ4VVJaTm1WVXd2ZmJHNjVMNzJYOGt4Rmx4bXRUTjFUN0djdW5wSnAiLCJtYWMiOiIzYmU3N2EzNzVkMzVhNzY2MmQ3Yjc4YjIyZDRkNzk5ZGUwZGE2ZDUzMWU0MzViNzM3OGE0NjdmNDc0ZjI0Njg2IiwidGFnIjoiIn0%3D; 10downloader_session=eyJpdiI6IkFWSFB6R2thTjJ1WnovZy8waVR1T3c9PSIsInZhbHVlIjoiRExxRDNiSHFYSi8yejB2aUdjZGswbUlkV0QybDZ1WHNmMHJ5SkJVbmdISEorWFlMT0c4RUNibllnUXpTNW5yTWd0Tk8xTjdrblVFQlQ0M3IvaFBpc1R4b0taV2xlbTNMVlZodDYwN0tYTGlGODBCdlg2bDQzYzNoalNub01EcjQiLCJtYWMiOiJhYzYwN2ZkNTcwMzdkYzk4ZGJmZDdjZTk5NzRlZDk2ODIzZjdmNzA5MzUyZWM1MjBiZWJlN2FjZGZkY2Q0YjA0IiwidGFnIjoiIn0%3D";
+ const headers = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
     "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "en-US,en;q=0.9",
-    "Content-Type": "application/x-www-form-urlencoded;",
-    "Origin": "https://savetube.io",
-    "Referer": "https://savetube.io/",
-    "Sec-Ch-Ua": '"Not)A;Brand";v="24", "Chromium";v="116"',
+    "Cookie": coookie,
+    "Referer": "https://10downloader.com/en/101/youtube-shorts-downloader",
+    "Sec-Ch-Ua": "\"Not)A;Brand\";v=\"24\", \"Chromium\";v=\"116\"",
     "Sec-Ch-Ua-Mobile": "?1",
-    "Sec-Ch-Ua-Platform": '"Android"',
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "cross-site",
+    "Sec-Ch-Ua-Platform": "\"Android\"",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36"
-    }
-const data = {
-  q: querylink,
-  vt:'home'
-}
- await axios.post(url,qs.stringify(data), {headers}).then(async(res) => {
-   if(formatType == "mp4") {
-  // console.log(res.data.links);
- const data2 = {
-  v_id:res.data.vid,
-  ftype:formatType,
-  fquality:qualityType,
-  fname: res.data.fn,
-  token:res.data.token,
-  timeExpire:res.data.timeExpires
-}
-   
-await axios.post(url2,qs.stringify(data2), {headers2}).then((ress) => {
-     let x = ress.data;
-  let info = {
-    status: "Success!",
-    statusCode: 200,
-    format: formatType,
-    quality: qualityType,
-    channel: res.data.a,
-    title: res.data.title,
-    data: x.result
   }
-    resolve(info)
-     })
-
-     } else {
-let url3 = "https://backend.svcenter.xyz/api/convert-by-45fc4be8916916ba3b8d61dd6e0d6994"
-
-let headers3 = {
-    "Accept": "*/*",
-  "Accept-Encoding": "gzip, deflate, br",
-  "Accept-Language": "en-US,en;q=0.9",
-  "Content-Length": "151",
-  "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-  "Origin": "https://savetube.io",
-  "Referer": "https://savetube.io/",
-  "Sec-Ch-Ua": "\"Not)A;Brand\";v=\"24\", \"Chromium\";v=\"116\"",
-  "Sec-Ch-Ua-Mobile": "?1",
-  "Sec-Ch-Ua-Platform": "\"Android\"",
-  "Sec-Fetch-Dest": "empty",
-  "Sec-Fetch-Mode": "cors",
-  "Sec-Fetch-Site": "cross-site",
-  "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile",
-    "X-Requested-Key":"de0cfuirtgf67a"
-}
-      let data3 = {
-  v_id:res.data.vid,
-  ftype:formatType,
-  fquality:qualityType,
-  token:res.data.token,
-  timeExpire:res.data.timeExpires,
-  content:'SaveTube.io'
-      }
-     console.log(data3)
-     await axios.post(url3,qs.stringify(data3), {headers3}).then((ress) => {
-     let x = ress.data;
-  let info = {
-    status: "Success!",
-    statusCode: 200,
-    format: formatType,
-    quality: qualityType,
-    channel: res.data.a,
-    title: res.data.title,
-    data: x.result
+ 
+  let url = "https://10downloader.com/download?";
+  let data = {
+    v:querylink,
+    lang:'en',
+    type:'video'
   }
-    resolve(info)
-     })
-    }
-   }).catch(err => {
-   console.log(err);
-    })       
+  
+let res = await axios.get(url+qs.stringify(data)+{headers});
+  let $ = cheerio.load(res.data);
+  let video = [];
+  let thumbnail = [];
+  let videoo = []
+  $('a.downloadBtn').each((i,el) => {
+    let src = $(el).attr('href');
+    if (src.includes("google")) {
+       video.push(src)
+    } else {
+       thumbnail.push(src)
+    }    
   })
+   
+  let data2 = {
+       Status:"Success!",
+       StatusCode:200,
+       video: {
+       Best:video[0],
+       Medium:video[1]
+       },
+       Audio:video[2],
+       Thumbnail:thumbnail[0]
+     }
+      videoo.push(data2);
+return videoo;
+  } catch (err) {
+  console.log(err);
+  }
 }
 
 
-module.exports = Ytdl
+module.exports = {YTDL}
